@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<DialogPane fx:id="dialogPane" prefHeight="150.0" prefWidth="250.0" style="-fx-background-color: LIGHTBLUE;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <content>
+        <VBox alignment="CENTER" spacing="15.0">
+            <Label fx:id="fxLokastig" alignment="TOP_CENTER" text="stig" textAlignment="CENTER">
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+            </Label>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Viltu spila aftur?" textAlignment="CENTER" />
+        </VBox>
+    </content>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+    </padding>
+</DialogPane>
