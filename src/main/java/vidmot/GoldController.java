@@ -118,8 +118,10 @@ public class GoldController {
         }
         KeyFrame k = new KeyFrame(Duration.seconds(3), //Makes new gold every 3 sec
                 e -> fxLeikbord.meiraGull());
+        KeyFrame k2 = new KeyFrame(Duration.seconds(5), //Makes new coal every 5 sec
+                e -> fxLeikbord.meiraKol());
 
-        gulltimalina = new Timeline(k);                     // Connect timeline
+        gulltimalina = new Timeline(k, k2);                     // Connect timeline
         gulltimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
         gulltimalina.play();                               // start the timeline
     }
