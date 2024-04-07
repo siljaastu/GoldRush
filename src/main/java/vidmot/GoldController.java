@@ -4,10 +4,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import vinnsla.Leikur;
 
@@ -98,6 +102,19 @@ public class GoldController {
             dialog.setResultConverter(b -> {                                 // b er af taginu ButtonType
                 if (b.getButtonData() == ButtonBar.ButtonData.OTHER) {
                     menuStyringController.onNyrLeikur();
+                }
+                else if(b.getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-menu-view.fxml"));
+                        Parent root = fxmlLoader.load();
+                        
+                        Stage stage = (Stage) fxLeikbord.getScene().getWindow();
+                        stage.setScene(new Scene(root));
+                        stage.show();
+                    } catch (Exception error) {
+                        error.printStackTrace();
+                    }
+
                 }
                 return null;
             });

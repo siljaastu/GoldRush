@@ -1,19 +1,8 @@
 package vinnsla;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
-import java.time.temporal.ChronoUnit;
+import javafx.beans.property.SimpleIntegerProperty;
+
 
 /******************************************************************************
  *  Nafn: Silja Ástudóttir, tölvupóstur: sia62@hi.is
