@@ -33,7 +33,7 @@ public class LeiklokDialog extends Dialog<Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getDialogPane().getButtonTypes().addAll(new ButtonType("Já"), (new ButtonType("Nei", ButtonBar.ButtonData.CANCEL_CLOSE)));
+        getDialogPane().getButtonTypes().addAll(new ButtonType("Já"), (new ButtonType("Valmynd", ButtonBar.ButtonData.CANCEL_CLOSE)));
     }
 
     public void initialize() {
