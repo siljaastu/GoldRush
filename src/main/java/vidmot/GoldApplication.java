@@ -23,7 +23,7 @@ public class GoldApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("goldrush-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GoldApplication.class.getResource("main-menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("GoldRush");
         stage.setScene(scene);
