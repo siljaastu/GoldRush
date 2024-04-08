@@ -39,6 +39,7 @@ public class GoldController {
     private Timeline klukkutimalina; // Timeline for the clock
     private HashMap<KeyCode, Stefna> attir = new HashMap<>(); // Makes a map for keycodes and directions
     private Stage stage;
+
     /**
      * Initializes the controller.
      * This method is called to initialize a controller after its root element has been
@@ -105,20 +106,15 @@ public class GoldController {
             gulltimalina.stop();
 
             LeiklokDialog dialog = new LeiklokDialog(leikur);
-            dialog.setResultConverter(b -> {                                 // b er af taginu ButtonType
-                if (b.getButtonData() == ButtonBar.ButtonData.OTHER) {
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("goldrush-view.fxml"));
-                        Parent root = fxmlLoader.load();
-
-                        stage.setScene(new Scene(root));
-                        stage.show();
-                    } catch (Exception error) {
-                        error.printStackTrace();
-                    }
-//                    menuStyringController.onNyrLeikur();
+            dialog.setResultConverter(b -> {
+                System.out.println("button data: "+ b.getButtonData());
+                // b er af taginu ButtonType
+                if (b.getButtonData() == ButtonBar.ButtonData.YES) {
+                    System.out.println("Hefja leik" + b.getButtonData());
+                    //hefjaLeik();
+                    menuStyringController.onNyrLeikur();
                 }
-                else if(b.getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                else if(b.getButtonData() == ButtonBar.ButtonData.BACK_PREVIOUS) {
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-menu-view.fxml"));
                         Parent root = fxmlLoader.load();
@@ -128,6 +124,7 @@ public class GoldController {
                         System.out.println("Stage Scene Window: "+ fxKlukka.getScene().getWindow());
                         stage.setScene(new Scene(root));
                         stage.show();
+
                     } catch (Exception error) {
                         error.printStackTrace();
                     }
@@ -137,6 +134,7 @@ public class GoldController {
                         menuStyringController.onHaetta();
                     } catch (Exception ignored){}
                 }
+                dialog.getDialogPane().getScene().getWindow().hide();
                 return null;
             });
             dialog.show();
