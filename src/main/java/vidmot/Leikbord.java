@@ -23,6 +23,7 @@ public class Leikbord extends Pane {
     private Grafari fxGrafari;
     private Leikur leikur;
     private ObservableList<Gull> gull = FXCollections.observableArrayList(); // Listi sem heldur utan um gullin
+    private ObservableList<Kol> kol = FXCollections.observableArrayList(); // Listi sem heldur utan um kolin
     private final Random random = new Random();   // Random generator
 
     /**
@@ -41,15 +42,22 @@ public class Leikbord extends Pane {
 
     /**
      * setjaBord prepares leikbord for a new game
-     * Removes the gold and relocates Grafari on leikbord
+     * Removes the gold and coal and relocates Grafari on leikbord
      */
     public void setjaBord() {
         fxGrafari.relocate(20, 200);
+
         for (Gull molar : gull) {
             // Remove the gold
             this.getChildren().remove(molar);
         }
         gull.clear();
+
+        for (Kol moli : kol) {
+            // Remove the coal
+            this.getChildren().remove(moli);
+        }
+        kol.clear();
     }
 
     public void setLeikur(Leikur leikur) {
@@ -81,6 +89,10 @@ public class Leikbord extends Pane {
         if (erGrefurGull()) {
             leikur.setStig(leikur.getStig() + 1);
         }
+
+        if (erGrefurKol()) {
+            leikur.setStig(leikur.getStig() - 1);
+        }
     }
 
     /**
@@ -96,7 +108,7 @@ public class Leikbord extends Pane {
         // Add gold to ObservableList
         gull.add(g);
     }
-
+    
     /**
      * meiraGull calls on framleidaGull
      */
@@ -120,6 +132,44 @@ public class Leikbord extends Pane {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if golddigger intersects with coal
+     * Removes coal if intersects
+     * @return true if intersected with coal, otherwise false
+     */
+    private boolean erGrefurKol() {
+        for (Kol moli : kol) {
+            if (fxGrafari.getBoundsInParent().intersects(moli.getBoundsInParent())) {
+                // Remove coal piece
+                kol.remove(moli);
+                this.getChildren().remove(moli);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Produces more kol k randomly on leikbord
+     */
+    private void framleidaKol() {
+        Kol k = new Kol();
+        k.relocate(random.nextInt((int) (getWidth() - k.getWidth())), random.nextInt((int) (getHeight() - k.getHeight())));
+
+        // Add kol to children
+        this.getChildren().add(k);
+
+        // Add kol to ObservableList
+        kol.add(k);
+    }
+
+    /**
+     * meiraKol calls on framleidaKol
+     */
+    public void meiraKol() {
+        framleidaKol();
     }
 
     /**
