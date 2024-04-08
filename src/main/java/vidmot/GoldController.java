@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import vinnsla.Leikur;
+import vinnsla.Spilari;
 
 import java.util.HashMap;
 
@@ -31,18 +32,15 @@ public class GoldController {
     @FXML
     private Label fxKlukka;     // Label for the clock
     @FXML
-    private Label fxStig;       // Label for the score
+    private Label fxStig1;       // Label for the score for Player 1
+    @FXML
+    private Label fxStig2;       // Label for the score for Player 2
     @FXML
     private MenuController menuStyringController; // MenuController item
     private Leikur leikur = new Leikur(); // Leikur instance
     private Timeline gulltimalina;  // Timeline for the gold
     private Timeline leiktimalina;  // Timeline for the gameloop
     private Timeline klukkutimalina; // Timeline for the clock
-    // TODO: Class fyrir spilara?
-    private final HashMap<KeyCode, Stefna> spilari1KeyMap = new HashMap<>(); // Makes a map for keycodes and directions for player 1
-    private final HashMap<KeyCode, Stefna> spilari2KeyMap = new HashMap<>(); // Makes a map for keycodes and directions for player 2
-    private final HashMap<KeyCode, Boolean> spilari1VirkirTakkar = new HashMap<>(); // Makes a map for registering currently held keys for player 1
-    private final HashMap<KeyCode, Boolean> spilari2VirkirTakkar = new HashMap<>(); // Makes a map for registering currently held keys for player 2
 
     /**
      * Initializes the controller.
@@ -57,11 +55,16 @@ public class GoldController {
         fxKlukka.textProperty().bind(Bindings.createStringBinding(() -> {
             return Integer.toString(leikur.getKlukka().getTimi());
         }, leikur.getKlukka().getTimiProperty()));
+
         fxLeikbord.setLeikur(leikur);
         // binds the score in Leikur
-        fxStig.textProperty().bind(Bindings.createStringBinding(() -> {
-            return Integer.toString(leikur.getSpilari1Stig());
-        }, leikur.spilari1StigProperty()));
+        fxStig1.textProperty().bind(Bindings.createStringBinding(() -> {
+            return Integer.toString(leikur.getSpilari1().getStig());
+        }, leikur.getSpilari1().stigProperty()));
+
+        fxStig2.textProperty().bind(Bindings.createStringBinding(() -> {
+            return Integer.toString(leikur.getSpilari2().getStig());
+        }, leikur.getSpilari2().stigProperty()));
         leikur.getKlukka().getTimiProperty().addListener((observable, old, newValue) -> {
             if (newValue.intValue() < 6) {
                 fxKlukka.setStyle("-fx-text-fill: RED;");
@@ -75,53 +78,32 @@ public class GoldController {
 
     /**
      * orvatakkar puts together enum directions and keycodes
+     * and sets up key event handler to update directions
      */
     private void orvatakkar() {
-        spilari1KeyMap.put(KeyCode.UP, Stefna.UPP);
-        spilari1KeyMap.put(KeyCode.DOWN, Stefna.NIDUR);
-        spilari1KeyMap.put(KeyCode.RIGHT, Stefna.HAEGRI);
-        spilari1KeyMap.put(KeyCode.LEFT, Stefna.VINSTRI);
+        Spilari sp1 = leikur.getSpilari1();
+        Spilari sp2 = leikur.getSpilari2();
 
-        spilari2KeyMap.put(KeyCode.W, Stefna.UPP);
-        spilari2KeyMap.put(KeyCode.S, Stefna.NIDUR);
-        spilari2KeyMap.put(KeyCode.D, Stefna.HAEGRI);
-        spilari2KeyMap.put(KeyCode.A, Stefna.VINSTRI);
+        sp1.attir.put(KeyCode.UP, Stefna.UPP);
+        sp1.attir.put(KeyCode.DOWN, Stefna.NIDUR);
+        sp1.attir.put(KeyCode.RIGHT, Stefna.HAEGRI);
+        sp1.attir.put(KeyCode.LEFT, Stefna.VINSTRI);
+
+        sp2.attir.put(KeyCode.W, Stefna.UPP);
+        sp2.attir.put(KeyCode.S, Stefna.NIDUR);
+        sp2.attir.put(KeyCode.D, Stefna.HAEGRI);
+        sp2.attir.put(KeyCode.A, Stefna.VINSTRI);
 
         fxLeikbord.addEventFilter(KeyEvent.ANY, event -> {
             if (leikur.getKlukka().getTimi() > 0) {
-                // TODO: Class fyrir Spilara?
-                if (spilari1KeyMap.containsKey(event.getCode())) {
-                    if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-                        spilari1VirkirTakkar.put(event.getCode(), true);
-                        fxLeikbord.setStefna(spilari1KeyMap.get(event.getCode()));
-                    } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
-                        spilari1VirkirTakkar.remove(event.getCode());
-
-                        if (spilari1VirkirTakkar.isEmpty()) {
-                            fxLeikbord.setStefna(null);
-                        } else {
-                            // Find next currently held key to update direction
-                            KeyCode naestiTakki = spilari1VirkirTakkar.keySet().iterator().next();
-                            fxLeikbord.setStefna(spilari1KeyMap.get(naestiTakki));
-                        }
-                    }
+                Stefna stefna1 = sp1.yttATakka(event);
+                if (stefna1 != null) {
+                    fxLeikbord.setStefna(stefna1);
                 }
 
-                if (spilari2KeyMap.containsKey(event.getCode())) {
-                    if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-                        spilari2VirkirTakkar.put(event.getCode(), true);
-                        fxLeikbord.setStefna(spilari2KeyMap.get(event.getCode()));
-                    } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
-                        spilari2VirkirTakkar.remove(event.getCode());
-
-                        if (spilari2VirkirTakkar.isEmpty()) {
-                            fxLeikbord.setStefna(null);
-                        } else {
-                            // Find next currently held key to update direction
-                            KeyCode naestiTakki = spilari2VirkirTakkar.keySet().iterator().next();
-                            fxLeikbord.setStefna(spilari2KeyMap.get(naestiTakki));
-                        }
-                    }
+                Stefna stefna2 = sp2.yttATakka(event);
+                if (stefna2 != null) {
+                    fxLeikbord.setStefna2(stefna2);
                 }
             }
         });
@@ -174,7 +156,8 @@ public class GoldController {
      */
     public void hefjaLeik() {
         fxLeikbord.setjaBord();
-        leikur.setSpilari1Stig(0);
+        leikur.getSpilari1().setStig(0);
+        leikur.getSpilari2().setStig(0);
         if (gulltimalina != null) {
             gulltimalina.stop();
         }

@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Translate;
 import vinnsla.Leikur;
+import vinnsla.Spilari;
 
 import java.io.IOException;
 import java.util.Random;
@@ -92,6 +93,9 @@ public class Leikbord extends Pane {
      * Afram tells grafari in which direction and how far he should move
      */
     public void afram() {
+        Spilari spilari1 = leikur.getSpilari1();
+        Spilari spilari2 = leikur.getSpilari2();
+
         faeraGrafara(fxGrafari);
 
         if (leikur.isTveirSpilarar()) {
@@ -99,33 +103,31 @@ public class Leikbord extends Pane {
         }
 
         if (erGrefurGull(fxGrafari)) {
-            leikur.setSpilari1Stig(leikur.getSpilari1Stig() + 1);
+            spilari1.setStig(spilari1.getStig() + 1);
         }
 
         if (leikur.isTveirSpilarar() && erGrefurGull(fxGrafari2)) {
-            leikur.setSpilari2Stig(leikur.getSpilari2Stig() + 1);
+            spilari2.setStig(spilari2.getStig() + 1);
         }
 
         if (erGrefurKol(fxGrafari)) {
-            leikur.setSpilari1Stig(leikur.getSpilari1Stig() - 1);
+            spilari1.setStig(spilari1.getStig() - 1);
         }
 
         if (leikur.isTveirSpilarar() && erGrefurKol(fxGrafari2)) {
-            leikur.setSpilari2Stig(leikur.getSpilari2Stig() - 1);
+            spilari2.setStig(spilari2.getStig() - 1);
         }
     }
 
     private void faeraGrafara(Grafari gr) {
         final double faersla = 10;
-        if (gr.getStefna() == null) {
-            return;
-        }
 
         Translate t = switch (gr.getStefna()) {
             case UPP -> new Translate(0, -faersla);
             case NIDUR -> new Translate(0, faersla);
             case VINSTRI -> new Translate(-faersla, 0);
             case HAEGRI -> new Translate(faersla, 0);
+            case KYRR -> new Translate(0, 0);
         };
         double x = gr.getLayoutX();
         double y = gr.getLayoutY();

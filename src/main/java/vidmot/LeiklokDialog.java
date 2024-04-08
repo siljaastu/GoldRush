@@ -37,6 +37,8 @@ public class LeiklokDialog extends Dialog<Void> {
     }
 
     public void initialize() {
-        fxLokastig.setText("Þú fékkst " + leikur.getSpilari1Stig() + " stig");
+        fxLokastig.setText(
+                "Spilari 1 fékk " + leikur.getSpilari1().getStig() +
+                        " stig\nSpilari 2 fékk " + leikur.getSpilari2().getStig() + " stig");
     }
 }
