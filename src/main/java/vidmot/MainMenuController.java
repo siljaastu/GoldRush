@@ -41,11 +41,14 @@ public class MainMenuController {
     private void swapToGame(ActionEvent event){
         try {
             // Load the FXML for the sample scene
-            Parent sampleRoot = FXMLLoader.load(getClass().getResource("goldrush-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("goldrush-view.fxml"));
+            Parent sampleRoot = loader.load();
             Scene sampleScene = new Scene(sampleRoot);
 
             // Get the current stage (window) using the event's source
             Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            GoldController controller = loader.getController();
+            controller.setStage(stage);
 
             // Set the new scene on the current stage
             stage.setScene(sampleScene);
