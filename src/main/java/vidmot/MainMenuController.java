@@ -18,28 +18,25 @@ public class MainMenuController {
     Boolean isOnePlayer;
     @FXML
     private Label hiscoreLabel;
+
+    private HiscoreManager hiscoreManager = new HiscoreManager("src/main/hiscores.txt");
+
+
     public void initialize(){
-        displayHiScores();
+        displayHiscore();
     }
 
 
-    //Lesari fyrir hiscores.txt file sem birtir hiscores á valmynd
-    private void displayHiScores() {
-        StringBuilder contentBuilder = new StringBuilder();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(Paths.get("src/main/hiscores.txt").toFile()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                contentBuilder.append(line).append("\n"); 
-            }
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            contentBuilder.append("Hiscores skrá ekki fundin."); 
+
+    private void displayHiscore(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String score : hiscoreManager.readHiScores()){
+            stringBuilder.append(score).append("\n");
         }
-        
-        hiscoreLabel.setText(contentBuilder.toString()); 
+        hiscoreLabel.setText(stringBuilder.toString());
     }
+
+
 
 
 
