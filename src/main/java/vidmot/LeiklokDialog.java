@@ -4,6 +4,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import vinnsla.Leikur;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonBar;
 
 import java.io.IOException;
 
@@ -26,6 +29,7 @@ public class LeiklokDialog extends Dialog<Void> {
         setTitle("Leik lokið!");
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("dialog-view.fxml"));
+
         try {
             fxmlLoader.setController(this);
             DialogPane dialogPane = fxmlLoader.load();
@@ -33,10 +37,16 @@ public class LeiklokDialog extends Dialog<Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getDialogPane().getButtonTypes().addAll(new ButtonType("Já"), (new ButtonType("Valmynd", ButtonBar.ButtonData.CANCEL_CLOSE)));
+
+        getDialogPane().getButtonTypes().addAll(
+                new ButtonType("Já", ButtonBar.ButtonData.YES),
+                new ButtonType("Valmynd", ButtonBar.ButtonData.BACK_PREVIOUS),
+                new ButtonType("Hætta", ButtonBar.ButtonData.FINISH)
+        );
+        initializeDialog();
     }
 
-    public void initialize() {
+    public void initializeDialog() {
         fxLokastig.setText(
                 "Spilari 1 fékk " + leikur.getSpilari1().getStig() +
                         " stig\nSpilari 2 fékk " + leikur.getSpilari2().getStig() + " stig");
