@@ -58,7 +58,7 @@ public class GoldController {
             return Integer.toString(leikur.getKlukka().getTimi());
         }, leikur.getKlukka().getTimiProperty()));
         fxLeikbord.setLeikur(leikur);
-            // binds the score in Leikur
+        // binds the score in Leikur
         fxStig.textProperty().bind(Bindings.createStringBinding(() -> {
             return Integer.toString(leikur.getSpilari1Stig());
         }, leikur.spilari1StigProperty()));
@@ -148,12 +148,11 @@ public class GoldController {
             dialog.setResultConverter(b -> {                                 // b er af taginu ButtonType
                 if (b.getButtonData() == ButtonBar.ButtonData.OTHER) {
                     menuStyringController.onNyrLeikur();
-                }
-                else if(b.getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
+                } else if (b.getButtonData() == ButtonBar.ButtonData.CANCEL_CLOSE) {
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-menu-view.fxml"));
                         Parent root = fxmlLoader.load();
-                        
+
                         Stage stage = (Stage) fxLeikbord.getScene().getWindow();
                         stage.setScene(new Scene(root));
                         stage.show();
