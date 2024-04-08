@@ -1,17 +1,53 @@
 package vidmot;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.nio.file.Paths;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 
 public class MainMenuController {
     Boolean isOnePlayer;
-    
+    @FXML
+    private Label hiscoreLabel;
+    public void initialize(){
+        displayHiScores();
+    }
+
+
+    //Lesari fyrir hiscores.txt file sem birtir hiscores á valmynd
+    private void displayHiScores() {
+        StringBuilder contentBuilder = new StringBuilder();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(Paths.get("src/main/hiscores.txt").toFile()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                contentBuilder.append(line).append("\n"); 
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            contentBuilder.append("Hiscores skrá ekki fundin."); 
+        }
+        
+        hiscoreLabel.setText(contentBuilder.toString()); 
+    }
+
+
+
+
+
+
+
+
     // Takkinn ef valið er einn leikmann
     @FXML
     private void handleOnePlayer(ActionEvent event) {
