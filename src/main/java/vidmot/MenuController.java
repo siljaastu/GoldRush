@@ -42,10 +42,9 @@ public class MenuController {
 
     /**
      * Handler for on quit
-     * @param event
      */
     @FXML
-    private void onHaetta(ActionEvent event) {
+    void onHaetta() {
         Alert haetta = new Alert(Alert.AlertType.CONFIRMATION);
         haetta.setTitle("Loka leik");
         haetta.setHeaderText("Hætta í leiknum");

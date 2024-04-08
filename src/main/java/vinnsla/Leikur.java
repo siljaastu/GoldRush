@@ -14,7 +14,7 @@ public class Leikur {
 
     private SimpleIntegerProperty stig = new SimpleIntegerProperty(); // Simple Integer property for score
     private int erfidleikastig = 0; // 3 difficulty levels 0,1,2
-    private final int[] timar = {45, 30, 15}; // Time in accordance with difficulty level
+    private final int[] timar = {60, 30, 15}; // Time in accordance with difficulty level
     private Klukka klukka = new Klukka(0); // Makes a new clock
 
     public int getStig() {
