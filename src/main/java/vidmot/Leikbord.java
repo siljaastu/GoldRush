@@ -21,10 +21,8 @@ import java.util.Random;
  *
  *****************************************************************************/
 public class Leikbord extends Pane {
-    @FXML
-    private Grafari fxGrafari;
-    @FXML
-    private Grafari fxGrafari2;
+    private Grafari grafari1;
+    private Grafari grafari2;
     private Leikur leikur;
     private ObservableList<Gull> gull = FXCollections.observableArrayList(); // Listi sem heldur utan um gullin
     private ObservableList<Kol> kol = FXCollections.observableArrayList(); // Listi sem heldur utan um kolin
@@ -44,17 +42,37 @@ public class Leikbord extends Pane {
         }
     }
 
-    public void initialize() {
-        fxGrafari2.setFill(Color.LIMEGREEN);
-    }
-
     /**
      * setjaBord prepares leikbord for a new game
      * Removes the gold and coal and relocates Grafari on leikbord
      */
     public void setjaBord() {
-        fxGrafari.relocate(20, 200);
-        fxGrafari2.relocate(120, 200);
+        // Remove previous golddiggers to prevent ghosts
+        if (grafari1 != null) {
+            this.getChildren().remove(grafari1);
+        }
+
+        if (grafari2 != null) {
+            this.getChildren().remove(grafari2);
+        }
+
+        if (leikur.isTveirSpilarar()) {
+            grafari1 = new Grafari();
+            grafari1.relocate(20, 200);
+
+            grafari2 = new Grafari();
+            grafari2.relocate(120, 200);
+            grafari2.setFill(Color.LIMEGREEN);
+
+            this.getChildren().addAll(grafari1, grafari2);
+        } else {
+            grafari1 = new Grafari();
+            grafari1.relocate(20, 200);
+            this.getChildren().add(grafari1);
+
+            // TODO: Maybe not necessary?
+            grafari2 = null;
+        }
 
         for (Gull molar : gull) {
             // Remove the gold
@@ -78,7 +96,7 @@ public class Leikbord extends Pane {
      * @param stefna
      */
     public void setStefna(Stefna stefna) {
-        fxGrafari.setStefna(stefna);
+        grafari1.setStefna(stefna);
     }
 
     /**
@@ -86,7 +104,7 @@ public class Leikbord extends Pane {
      * @param stefna
      */
     public void setStefna2(Stefna stefna) {
-        fxGrafari2.setStefna(stefna);
+        grafari2.setStefna(stefna);
     }
 
     /**
@@ -96,25 +114,25 @@ public class Leikbord extends Pane {
         Spilari spilari1 = leikur.getSpilari1();
         Spilari spilari2 = leikur.getSpilari2();
 
-        faeraGrafara(fxGrafari);
+        faeraGrafara(grafari1);
 
         if (leikur.isTveirSpilarar()) {
-            faeraGrafara(fxGrafari2);
+            faeraGrafara(grafari2);
         }
 
-        if (erGrefurGull(fxGrafari)) {
+        if (erGrefurGull(grafari1)) {
             spilari1.setStig(spilari1.getStig() + 1);
         }
 
-        if (leikur.isTveirSpilarar() && erGrefurGull(fxGrafari2)) {
+        if (leikur.isTveirSpilarar() && erGrefurGull(grafari2)) {
             spilari2.setStig(spilari2.getStig() + 1);
         }
 
-        if (erGrefurKol(fxGrafari)) {
+        if (erGrefurKol(grafari1)) {
             spilari1.setStig(spilari1.getStig() - 1);
         }
 
-        if (leikur.isTveirSpilarar() && erGrefurKol(fxGrafari2)) {
+        if (leikur.isTveirSpilarar() && erGrefurKol(grafari2)) {
             spilari2.setStig(spilari2.getStig() - 1);
         }
     }

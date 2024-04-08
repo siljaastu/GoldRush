@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Leikur {
 
     private int erfidleikastig = 0; // 3 difficulty levels 0,1,2
-    private boolean tveirSpilarar = false; // TODO: Property?
+    public static boolean tveirSpilarar = false; // TODO: Property?
     private final int[] timar = {60, 30, 15}; // Time in accordance with difficulty level
 
     private Klukka klukka = new Klukka(0); // Makes a new clock

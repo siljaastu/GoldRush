@@ -38,7 +38,7 @@ public class GoldController {
     private Label fxStig2;       // Label for the score for Player 2
     @FXML
     private MenuController menuStyringController; // MenuController item
-    private Leikur leikur = new Leikur(); // Leikur instance
+    public Leikur leikur = new Leikur(); // Leikur instance
     private Timeline gulltimalina;  // Timeline for the gold
     private Timeline leiktimalina;  // Timeline for the gameloop
     private Timeline klukkutimalina; // Timeline for the clock
@@ -50,7 +50,7 @@ public class GoldController {
      * completely processed.
      */
     public void initialize() {
-        leikur.setTveirSpilarar(true); // TODO: Remove
+        System.out.println("GoldController initialize " + leikur.isTveirSpilarar());
 
         menuStyringController.setGoldController(this);
         orvatakkar();
