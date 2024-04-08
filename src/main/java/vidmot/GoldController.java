@@ -114,7 +114,12 @@ public class GoldController {
                     } catch (Exception error) {
                         error.printStackTrace();
                     }
+                }
+                else if (b.getButtonData() == ButtonBar.ButtonData.FINISH) {
+                    try {
+                        menuStyringController.onHaetta();
 
+                    } catch (Exception ignored){}
                 }
                 return null;
             });
