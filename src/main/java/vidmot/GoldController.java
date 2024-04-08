@@ -96,8 +96,13 @@ public class GoldController {
                         fxLeikbord.setStefna(spilari1KeyMap.get(event.getCode()));
                     } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
                         spilari1VirkirTakkar.remove(event.getCode());
+
                         if (spilari1VirkirTakkar.isEmpty()) {
                             fxLeikbord.setStefna(null);
+                        } else {
+                            // Find next currently held key to update direction
+                            KeyCode naestiTakki = spilari1VirkirTakkar.keySet().iterator().next();
+                            fxLeikbord.setStefna(spilari1KeyMap.get(naestiTakki));
                         }
                     }
                 }
@@ -105,11 +110,16 @@ public class GoldController {
                 if (spilari2KeyMap.containsKey(event.getCode())) {
                     if (event.getEventType() == KeyEvent.KEY_PRESSED) {
                         spilari2VirkirTakkar.put(event.getCode(), true);
-                        fxLeikbord.setStefna2(spilari2KeyMap.get(event.getCode()));
+                        fxLeikbord.setStefna(spilari2KeyMap.get(event.getCode()));
                     } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
                         spilari2VirkirTakkar.remove(event.getCode());
+
                         if (spilari2VirkirTakkar.isEmpty()) {
-                            fxLeikbord.setStefna2(null);
+                            fxLeikbord.setStefna(null);
+                        } else {
+                            // Find next currently held key to update direction
+                            KeyCode naestiTakki = spilari2VirkirTakkar.keySet().iterator().next();
+                            fxLeikbord.setStefna(spilari2KeyMap.get(naestiTakki));
                         }
                     }
                 }
