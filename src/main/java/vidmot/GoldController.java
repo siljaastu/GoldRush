@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import vinnsla.Leikur;
 
@@ -35,8 +36,13 @@ public class GoldController {
     private MenuController menuStyringController; // MenuController item
     private Leikur leikur = new Leikur(); // Leikur instance
     private Timeline gulltimalina;  // Timeline for the gold
+    private Timeline leiktimalina;  // Timeline for the gameloop
     private Timeline klukkutimalina; // Timeline for the clock
-    private HashMap<KeyCode, Stefna> attir = new HashMap<>(); // Makes a map for keycodes and directions
+    // TODO: Class fyrir spilara?
+    private final HashMap<KeyCode, Stefna> spilari1KeyMap = new HashMap<>(); // Makes a map for keycodes and directions for player 1
+    private final HashMap<KeyCode, Stefna> spilari2KeyMap = new HashMap<>(); // Makes a map for keycodes and directions for player 2
+    private final HashMap<KeyCode, Boolean> spilari1VirkirTakkar = new HashMap<>(); // Makes a map for registering currently held keys for player 1
+    private final HashMap<KeyCode, Boolean> spilari2VirkirTakkar = new HashMap<>(); // Makes a map for registering currently held keys for player 2
 
     /**
      * Initializes the controller.
@@ -44,6 +50,8 @@ public class GoldController {
      * completely processed.
      */
     public void initialize() {
+        leikur.setTveirSpilarar(true); // TODO: Remove
+
         menuStyringController.setGoldController(this);
         orvatakkar();
         fxKlukka.textProperty().bind(Bindings.createStringBinding(() -> {
@@ -52,8 +60,8 @@ public class GoldController {
         fxLeikbord.setLeikur(leikur);
             // binds the score in Leikur
         fxStig.textProperty().bind(Bindings.createStringBinding(() -> {
-            return Integer.toString(leikur.getStig());
-        }, leikur.stigProperty()));
+            return Integer.toString(leikur.getSpilari1Stig());
+        }, leikur.spilari1StigProperty()));
         leikur.getKlukka().getTimiProperty().addListener((observable, old, newValue) -> {
             if (newValue.intValue() < 6) {
                 fxKlukka.setStyle("-fx-text-fill: RED;");
@@ -69,14 +77,42 @@ public class GoldController {
      * orvatakkar puts together enum directions and keycodes
      */
     private void orvatakkar() {
-        attir.put(KeyCode.UP, Stefna.UPP);
-        attir.put(KeyCode.DOWN, Stefna.NIDUR);
-        attir.put(KeyCode.RIGHT, Stefna.HAEGRI);
-        attir.put(KeyCode.LEFT, Stefna.VINSTRI);
-        fxLeikbord.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        spilari1KeyMap.put(KeyCode.UP, Stefna.UPP);
+        spilari1KeyMap.put(KeyCode.DOWN, Stefna.NIDUR);
+        spilari1KeyMap.put(KeyCode.RIGHT, Stefna.HAEGRI);
+        spilari1KeyMap.put(KeyCode.LEFT, Stefna.VINSTRI);
+
+        spilari2KeyMap.put(KeyCode.W, Stefna.UPP);
+        spilari2KeyMap.put(KeyCode.S, Stefna.NIDUR);
+        spilari2KeyMap.put(KeyCode.D, Stefna.HAEGRI);
+        spilari2KeyMap.put(KeyCode.A, Stefna.VINSTRI);
+
+        fxLeikbord.addEventFilter(KeyEvent.ANY, event -> {
             if (leikur.getKlukka().getTimi() > 0) {
-                fxLeikbord.setStefna(attir.get(event.getCode()));
-                fxLeikbord.afram();
+                // TODO: Class fyrir Spilara?
+                if (spilari1KeyMap.containsKey(event.getCode())) {
+                    if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+                        spilari1VirkirTakkar.put(event.getCode(), true);
+                        fxLeikbord.setStefna(spilari1KeyMap.get(event.getCode()));
+                    } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
+                        spilari1VirkirTakkar.remove(event.getCode());
+                        if (spilari1VirkirTakkar.isEmpty()) {
+                            fxLeikbord.setStefna(null);
+                        }
+                    }
+                }
+
+                if (spilari2KeyMap.containsKey(event.getCode())) {
+                    if (event.getEventType() == KeyEvent.KEY_PRESSED) {
+                        spilari2VirkirTakkar.put(event.getCode(), true);
+                        fxLeikbord.setStefna2(spilari2KeyMap.get(event.getCode()));
+                    } else if (event.getEventType() == KeyEvent.KEY_RELEASED) {
+                        spilari2VirkirTakkar.remove(event.getCode());
+                        if (spilari2VirkirTakkar.isEmpty()) {
+                            fxLeikbord.setStefna2(null);
+                        }
+                    }
+                }
             }
         });
     }
@@ -91,13 +127,13 @@ public class GoldController {
         }
         leikur.getKlukka().getTimiProperty().set(leikur.getTimar()[leikur.getErfidleikastig()]);
         KeyFrame k = new KeyFrame(Duration.seconds(1), e -> {
-            System.out.println(leikur.getErfidleikastig());
             leikur.getKlukka().tic();
         });
         klukkutimalina = new Timeline(k);
         klukkutimalina.setCycleCount(leikur.getKlukka().getTimi());
         klukkutimalina.setOnFinished(e -> {
             gulltimalina.stop();
+            leiktimalina.stop();
             LeiklokDialog dialog = new LeiklokDialog(leikur);
             dialog.setResultConverter(b -> {                                 // b er af taginu ButtonType
                 if (b.getButtonData() == ButtonBar.ButtonData.OTHER) {
@@ -129,7 +165,7 @@ public class GoldController {
      */
     public void hefjaLeik() {
         fxLeikbord.setjaBord();
-        leikur.setStig(0);
+        leikur.setSpilari1Stig(0);
         if (gulltimalina != null) {
             gulltimalina.stop();
         }
@@ -138,9 +174,18 @@ public class GoldController {
         KeyFrame k2 = new KeyFrame(Duration.seconds(5), //Makes new coal every 5 sec
                 e -> fxLeikbord.meiraKol());
 
-        gulltimalina = new Timeline(k, k2);                     // Connect timeline
+        gulltimalina = new Timeline(k, k2);            // Connect timeline
         gulltimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
         gulltimalina.play();                               // start the timeline
+
+        if (leiktimalina != null) {
+            leiktimalina.stop();
+        }
+
+        leiktimalina = new Timeline(new KeyFrame(Duration.millis(50),
+                e -> fxLeikbord.afram()));            // Connect timeline
+        leiktimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
+        leiktimalina.play();                               // start the timeline
     }
 
     /**
