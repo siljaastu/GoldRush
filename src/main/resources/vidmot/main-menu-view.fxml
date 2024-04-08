@@ -17,7 +17,11 @@
       </Button>
       <Button layoutX="378.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleTwoPlayer" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px;" text="2 Player">
       </Button>
-      <Label alignment="TOP_LEFT" layoutX="431.0" layoutY="54.0" prefHeight="129.0" prefWidth="138.0" style="-fx-background-color: #FFF59D; -fx-text-fill: #000000; -fx-label-padding: 10px; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-color: #BDBDBD; -fx-border-width: 2px; -fx-border-radius: 5px;" text="Highscore Sample">
+      <Label fx:id="hiscoreLabel" alignment="TOP_LEFT" layoutX="428.0" layoutY="85.0" prefHeight="129.0" prefWidth="157.0" style="-fx-background-color: #FFF59D; -fx-text-fill: #000000; -fx-label-padding: 10px; -fx-font-size: 14px; -fx-font-weight: bold; -fx-border-color: #BDBDBD; -fx-border-width: 2px; -fx-border-radius: 5px;" text="Highscore Sample">
       </Label>
+      <Text layoutX="457.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Highscores" textAlignment="CENTER">
+         <font>
+            <Font size="16.0" />
+         </font></Text>
    </children>
 </AnchorPane>
