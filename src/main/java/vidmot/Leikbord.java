@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Translate;
 import vinnsla.Leikur;
 import vinnsla.Spilari;
+import vinnsla.Tonlist;
 
 import java.io.IOException;
 import java.util.Random;
@@ -27,6 +28,7 @@ public class Leikbord extends Pane {
     private ObservableList<Gull> gull = FXCollections.observableArrayList(); // Listi sem heldur utan um gullin
     private ObservableList<Kol> kol = FXCollections.observableArrayList(); // Listi sem heldur utan um kolin
     private final Random random = new Random();   // Random generator
+    private Tonlist tonlist = new Tonlist();
 
     /**
      * Constructor for Leikbord. Loads the FXML and catches exception
@@ -187,6 +189,7 @@ public class Leikbord extends Pane {
             if (gr.getBoundsInParent().intersects(molar.getBoundsInParent())) {
                 // Remove gold piece
                 gull.remove(molar);
+                tonlist.gullFoundSound();
                 this.getChildren().remove(molar);
                 return true;
             }
@@ -204,6 +207,7 @@ public class Leikbord extends Pane {
             if (gr.getBoundsInParent().intersects(moli.getBoundsInParent())) {
                 // Remove coal piece
                 kol.remove(moli);
+                tonlist.kolFoundSound();
                 this.getChildren().remove(moli);
                 return true;
             }

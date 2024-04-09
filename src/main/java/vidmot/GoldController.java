@@ -130,6 +130,8 @@ public class GoldController {
         klukkutimalina.setOnFinished(e -> {
             gulltimalina.stop();
             leiktimalina.stop();
+            tonlist.stop();
+            tonlist.gameOverMusic();
 
             LeiklokDialog dialog = new LeiklokDialog(leikur);
             dialog.setResultConverter(b -> {
@@ -164,7 +166,7 @@ public class GoldController {
                 return null;
             });
             dialog.show();
-            tonlist.stop();
+
 
         });
         klukkutimalina.play();

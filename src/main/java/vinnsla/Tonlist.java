@@ -10,12 +10,35 @@ public class Tonlist {
     MediaPlayer mediaPlayer;
 
     public void play() {
-        String fileName = "backgroundMusic.mp3";
-        playHitSound(fileName);
+        String backgroundMusic = "backgroundMusic.mp3";
+        playHitSound(backgroundMusic);
     }
 
     public void stop() {
         mediaPlayer.stop();
+    }
+
+    public void gameOverMusic() {
+        String gameOverTonlist = "gameOver.mp3";
+        playOnceSound(gameOverTonlist);
+    }
+
+    public void kolFoundSound() {
+        String kolSound = "kolSound.mp3";
+        playOnceSound(kolSound);
+    }
+
+    public void gullFoundSound() {
+        String gullSound = "gullSound.mp3";
+        playOnceSound(gullSound);
+    }
+
+    private void playOnceSound(String fileName) {
+        String path = Objects.requireNonNull(getClass().getResource(fileName)).getPath();
+        System.out.println(path);
+        Media media = new Media(new File(path).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
     }
 
     private void playHitSound(String fileName) {
