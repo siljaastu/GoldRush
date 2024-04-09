@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.CustomMenuItem?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -8,29 +10,31 @@
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.ToggleGroup?>
 
-<MenuBar fx:id="fxMenuBar" prefHeight="30.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21"
-         xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.MenuController">
+<MenuBar fx:id="fxMenuBar" prefHeight="30.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.MenuController">
     <cursor>
-        <Cursor fx:constant="DEFAULT"/>
+        <Cursor fx:constant="DEFAULT" />
     </cursor>
     <Menu mnemonicParsing="false" text="Skrá">
-        <MenuItem mnemonicParsing="false" onAction="#onNyrLeikur" text="Nýr leikur"/>
-        <SeparatorMenuItem mnemonicParsing="false"/>
-        <MenuItem mnemonicParsing="false" onAction="#onHaetta" text="Hætta"/>
+        <MenuItem mnemonicParsing="false" onAction="#onNyrLeikur" text="Nýr leikur" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" onAction="#onHaetta" text="Hætta" />
     </Menu>
     <Menu mnemonicParsing="false" text="Breyta">
-        <RadioMenuItem fx:id="lett" mnemonicParsing="false" onAction="#onErfidleikastig" selected="true"
-                       text="Létt">
+        <RadioMenuItem fx:id="lett" mnemonicParsing="false" onAction="#onErfidleikastig" selected="true" text="Létt">
             <toggleGroup>
-                <ToggleGroup fx:id="erfidleikastig"/>
+                <ToggleGroup fx:id="erfidleikastig" />
             </toggleGroup>
         </RadioMenuItem>
-        <RadioMenuItem fx:id="midlungs" mnemonicParsing="false" onAction="#onErfidleikastig" text="Miðlungs"
-                       toggleGroup="$erfidleikastig"/>
-        <RadioMenuItem fx:id="erfitt" mnemonicParsing="false" onAction="#onErfidleikastig" text="Erfitt"
-                       toggleGroup="$erfidleikastig"/>
+        <RadioMenuItem fx:id="midlungs" mnemonicParsing="false" onAction="#onErfidleikastig" text="Miðlungs" toggleGroup="$erfidleikastig" />
+        <RadioMenuItem fx:id="erfitt" mnemonicParsing="false" onAction="#onErfidleikastig" text="Erfitt" toggleGroup="$erfidleikastig" />
     </Menu>
     <Menu mnemonicParsing="false" text="Hjálp">
-        <MenuItem mnemonicParsing="false" onAction="#onUmForritid" text="Um forritið"/>
+        <MenuItem mnemonicParsing="false" onAction="#onUmForritid" text="Um forritið" />
+      <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+        <content>
+          <CheckBox text="Click Me" />
+        </content>
+      </CustomMenuItem>
     </Menu>
+   <Menu fx:id="hiscoreDisplay" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: black;" text="Hiscore:" />
 </MenuBar>
