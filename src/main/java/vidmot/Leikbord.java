@@ -60,19 +60,18 @@ public class Leikbord extends Pane {
 
         if (leikur.isTveirSpilarar()) {
             grafari1 = new Grafari();
-            grafari1.relocate(20, 200);
+            grafari1.relocate(30, 400);
 
             grafari2 = new Grafari();
-            grafari2.relocate(120, 200);
+            grafari2.relocate(770-grafari2.getWidth(), 400);
             grafari2.setFill(Color.LIMEGREEN);
 
             this.getChildren().addAll(grafari1, grafari2);
         } else {
             grafari1 = new Grafari();
-            grafari1.relocate(20, 200);
+            grafari1.relocate(30, 400);
             this.getChildren().add(grafari1);
 
-            // TODO: Maybe not necessary?
             grafari2 = null;
         }
 
