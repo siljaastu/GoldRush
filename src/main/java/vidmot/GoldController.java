@@ -196,7 +196,7 @@ public class GoldController {
             leiktimalina.stop();
         }
 
-        leiktimalina = new Timeline(new KeyFrame(Duration.millis(50),
+        leiktimalina = new Timeline(new KeyFrame(Duration.millis(30),
                 e -> fxLeikbord.afram()));            // Connect timeline
         leiktimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
         leiktimalina.play();                               // start the timeline

@@ -7,6 +7,7 @@ import vinnsla.Leikur;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ButtonBar;
+
 import java.io.IOException;
 
 /******************************************************************************
@@ -27,7 +28,7 @@ public class LeiklokDialog extends Dialog<Void> {
 
     public LeiklokDialog(Leikur leikur) {
         this.leikur = leikur;
-        
+
         setTitle("Leik lokið!");
         hiscoreManager.updateHiScore(leikur.getSpilari1().getStig());
         hiscoreManager.updateHiScore(leikur.getSpilari2().getStig());
@@ -50,8 +51,13 @@ public class LeiklokDialog extends Dialog<Void> {
     }
 
     public void initializeDialog() {
-        fxLokastig.setText(
-                "Spilari 1 fékk " + leikur.getSpilari1().getStig() +
-                        " stig\nSpilari 2 fékk " + leikur.getSpilari2().getStig() + " stig");
+        if (Leikur.tveirSpilarar) {
+            fxLokastig.setText(
+                    "Spilari 1 fékk " + leikur.getSpilari1().getStig() +
+                            " stig\nSpilari 2 fékk " + leikur.getSpilari2().getStig() + " stig");
+        } else {
+            fxLokastig.setText(
+                    "Þú fékkst " + leikur.getSpilari1().getStig() + " stig");
+        }
     }
 }

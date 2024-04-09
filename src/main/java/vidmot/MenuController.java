@@ -22,8 +22,6 @@ public class MenuController {
     private HiscoreManager hiscoreManager = new HiscoreManager();
     
 
-
-
     /**
      * Sets gold controller.
      *
@@ -35,9 +33,9 @@ public class MenuController {
 
 
 
-    public  void initialize() {
-        updateHiScore();
-    }
+//    public  void initialize() {
+//        updateHiScore();
+//    }
 
     public void updateHiScore(){
         hiscoreDisplay.setText("Hiscore: " + hiscoreManager.readHiScore());

@@ -7,12 +7,12 @@
 <?import javafx.scene.text.Font?>
 <?import vidmot.Leikbord?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.GoldController">
-    <VBox prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.GoldController">
+    <VBox prefHeight="600.0" prefWidth="800.0">
         <fx:include fx:id="menuStyring" source="menu-view.fxml" />
-        <Leikbord fx:id="fxLeikbord" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" style="-fx-background-color: DARKBLUE;">
+        <Leikbord fx:id="fxLeikbord" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="500.0" style="-fx-background-color: DARKBLUE;">
         </Leikbord>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: WHITE;">
+        <HBox alignment="CENTER" fillHeight="false" prefHeight="100.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: WHITE;">
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" spacing="10.0">
                 <Label alignment="CENTER" text="Spilari 1 stig:" textAlignment="CENTER" />
                 <Label fx:id="fxStig1" alignment="CENTER" text="0" textAlignment="CENTER">
