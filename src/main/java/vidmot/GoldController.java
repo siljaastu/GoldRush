@@ -139,7 +139,6 @@ public class GoldController {
                 // b er af taginu ButtonType
                 if (b.getButtonData() == ButtonBar.ButtonData.YES) {
                     System.out.println("Hefja leik" + b.getButtonData());
-                    //hefjaLeik();
                     menuStyringController.onNyrLeikur();
                 }
                 else if(b.getButtonData() == ButtonBar.ButtonData.BACK_PREVIOUS) {
@@ -166,8 +165,6 @@ public class GoldController {
                 return null;
             });
             dialog.show();
-
-
         });
         klukkutimalina.play();
     }
@@ -190,8 +187,8 @@ public class GoldController {
 
         gulltimalina = new Timeline(k, k2);            // Connect timeline
         gulltimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
-        gulltimalina.play();
-        tonlist.play();// start the timeline
+        gulltimalina.play();                                // start the timeline
+        tonlist.play();                                     // Background tónlist byrjar að spila
         gulltimalina.play();                               // start the timeline
 
         if (leiktimalina != null) {

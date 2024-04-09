@@ -36,7 +36,11 @@ public class MenuController {
         Alert forritid = new Alert(Alert.AlertType.INFORMATION);
         forritid.setTitle("Um GoldRush");
         forritid.setHeaderText("GoldRush leikurinn");
-        forritid.setContentText("Þessi leikur er gerður af Silju Ástudóttur í áfanganum Viðmótsforritun í Háskóla Íslands 2024.");
+        forritid.setContentText("Markmið er að safna eins miklu " +
+                "gulli og þú getur áður en að tíminn rennur út. \n" +
+                "Passaður þig þó að snerta ekki litlu kolamolana!. \n" +
+                "Notaðu örvatakkana til að færa gull grafarann. \n" +
+                "2.Player: Notaðu A, W, S, D til að færa gull grafarann");
         forritid.showAndWait();
     }
 
