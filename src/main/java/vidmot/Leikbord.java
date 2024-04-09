@@ -5,8 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Translate;
 import vinnsla.Leikur;
+import vinnsla.Spilari;
 
 import java.io.IOException;
 import java.util.Random;
@@ -19,8 +21,8 @@ import java.util.Random;
  *
  *****************************************************************************/
 public class Leikbord extends Pane {
-    @FXML
-    private Grafari fxGrafari;
+    private Grafari grafari1;
+    private Grafari grafari2;
     private Leikur leikur;
     private ObservableList<Gull> gull = FXCollections.observableArrayList(); // Listi sem heldur utan um gullin
     private ObservableList<Kol> kol = FXCollections.observableArrayList(); // Listi sem heldur utan um kolin
@@ -45,7 +47,32 @@ public class Leikbord extends Pane {
      * Removes the gold and coal and relocates Grafari on leikbord
      */
     public void setjaBord() {
-        fxGrafari.relocate(20, 200);
+        // Remove previous golddiggers to prevent ghosts
+        if (grafari1 != null) {
+            this.getChildren().remove(grafari1);
+        }
+
+        if (grafari2 != null) {
+            this.getChildren().remove(grafari2);
+        }
+
+        if (leikur.isTveirSpilarar()) {
+            grafari1 = new Grafari();
+            grafari1.relocate(20, 200);
+
+            grafari2 = new Grafari();
+            grafari2.relocate(120, 200);
+            grafari2.setFill(Color.LIMEGREEN);
+
+            this.getChildren().addAll(grafari1, grafari2);
+        } else {
+            grafari1 = new Grafari();
+            grafari1.relocate(20, 200);
+            this.getChildren().add(grafari1);
+
+            // TODO: Maybe not necessary?
+            grafari2 = null;
+        }
 
         for (Gull molar : gull) {
             // Remove the gold
@@ -64,35 +91,69 @@ public class Leikbord extends Pane {
         this.leikur = leikur;
     }
 
+    /**
+     * Update direction for Grafari 1
+     * @param stefna
+     */
     public void setStefna(Stefna stefna) {
-        fxGrafari.setStefna(stefna);
+        grafari1.setStefna(stefna);
+    }
+
+    /**
+     * Update direction for Grafari 2
+     * @param stefna
+     */
+    public void setStefna2(Stefna stefna) {
+        grafari2.setStefna(stefna);
     }
 
     /**
      * Afram tells grafari in which direction and how far he should move
      */
     public void afram() {
+        Spilari spilari1 = leikur.getSpilari1();
+        Spilari spilari2 = leikur.getSpilari2();
+
+        faeraGrafara(grafari1);
+
+        if (leikur.isTveirSpilarar()) {
+            faeraGrafara(grafari2);
+        }
+
+        if (erGrefurGull(grafari1)) {
+            spilari1.setStig(spilari1.getStig() + 1);
+        }
+
+        if (leikur.isTveirSpilarar() && erGrefurGull(grafari2)) {
+            spilari2.setStig(spilari2.getStig() + 1);
+        }
+
+        if (erGrefurKol(grafari1)) {
+            spilari1.setStig(spilari1.getStig() - 1);
+        }
+
+        if (leikur.isTveirSpilarar() && erGrefurKol(grafari2)) {
+            spilari2.setStig(spilari2.getStig() - 1);
+        }
+    }
+
+    private void faeraGrafara(Grafari gr) {
         final double faersla = 10;
-        Translate t = switch (fxGrafari.getStefna()) {
+
+        Translate t = switch (gr.getStefna()) {
             case UPP -> new Translate(0, -faersla);
             case NIDUR -> new Translate(0, faersla);
             case VINSTRI -> new Translate(-faersla, 0);
             case HAEGRI -> new Translate(faersla, 0);
+            case KYRR -> new Translate(0, 0);
         };
-        double x = fxGrafari.getLayoutX();
-        double y = fxGrafari.getLayoutY();
+        double x = gr.getLayoutX();
+        double y = gr.getLayoutY();
 
-        double nyttX = innanBords(x + t.getX(), 0.0, getWidth() - fxGrafari.getWidth());
-        double nyttY = innanBords(y + t.getY(), 0.0, getHeight() - fxGrafari.getHeight());
+        double nyttX = innanBords(x + t.getX(), 0.0, getWidth() - gr.getWidth());
+        double nyttY = innanBords(y + t.getY(), 0.0, getHeight() - gr.getHeight());
 
-        fxGrafari.relocate(nyttX, nyttY);   // Location of golddigger updated
-        if (erGrefurGull()) {
-            leikur.setStig(leikur.getStig() + 1);
-        }
-
-        if (erGrefurKol()) {
-            leikur.setStig(leikur.getStig() - 1);
-        }
+        gr.relocate(nyttX, nyttY);   // Location of golddigger updated
     }
 
     /**
@@ -121,10 +182,9 @@ public class Leikbord extends Pane {
      * Removes gold if intersects
      * @return true if intersected with gold, otherwise false
      */
-    private boolean erGrefurGull() {
-
+    private boolean erGrefurGull(Grafari gr) {
         for (Gull molar : gull) {
-            if (fxGrafari.getBoundsInParent().intersects(molar.getBoundsInParent())) {
+            if (gr.getBoundsInParent().intersects(molar.getBoundsInParent())) {
                 // Remove gold piece
                 gull.remove(molar);
                 this.getChildren().remove(molar);
@@ -139,9 +199,9 @@ public class Leikbord extends Pane {
      * Removes coal if intersects
      * @return true if intersected with coal, otherwise false
      */
-    private boolean erGrefurKol() {
+    private boolean erGrefurKol(Grafari gr) {
         for (Kol moli : kol) {
-            if (fxGrafari.getBoundsInParent().intersects(moli.getBoundsInParent())) {
+            if (gr.getBoundsInParent().intersects(moli.getBoundsInParent())) {
                 // Remove coal piece
                 kol.remove(moli);
                 this.getChildren().remove(moli);

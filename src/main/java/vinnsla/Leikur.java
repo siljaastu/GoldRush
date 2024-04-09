@@ -12,21 +12,21 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public class Leikur {
 
-    private SimpleIntegerProperty stig = new SimpleIntegerProperty(); // Simple Integer property for score
     private int erfidleikastig = 0; // 3 difficulty levels 0,1,2
+    public static boolean tveirSpilarar = false; // TODO: Property?
     private final int[] timar = {60, 30, 15}; // Time in accordance with difficulty level
+
     private Klukka klukka = new Klukka(0); // Makes a new clock
 
-    public int getStig() {
-        return stig.get();
+    private Spilari spilari1 = new Spilari();
+    private Spilari spilari2 = new Spilari();
+
+    public Spilari getSpilari1() {
+        return spilari1;
     }
 
-    public void setStig(int stig) {
-        this.stig.set(stig);
-    }
-
-    public SimpleIntegerProperty stigProperty() {
-        return stig;
+    public Spilari getSpilari2() {
+        return spilari2;
     }
 
     public int getErfidleikastig() {
@@ -43,5 +43,13 @@ public class Leikur {
 
     public Klukka getKlukka() {
         return klukka;
+    }
+
+    public boolean isTveirSpilarar() {
+        return tveirSpilarar;
+    }
+
+    public void setTveirSpilarar(boolean tveirSpilarar) {
+        this.tveirSpilarar = tveirSpilarar;
     }
 }
