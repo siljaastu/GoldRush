@@ -10,5 +10,6 @@ public enum Stefna {
     UPP,
     NIDUR,
     VINSTRI,
-    HAEGRI
+    HAEGRI,
+    KYRR,
 }
