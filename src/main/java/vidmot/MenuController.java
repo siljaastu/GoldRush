@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.util.Optional;
 
 /******************************************************************************
@@ -17,6 +16,13 @@ import java.util.Optional;
 public class MenuController {
     @FXML
     private GoldController goldController; // GoldController item
+    @FXML
+    private MenuItem hiscoreDisplay;
+
+    private HiscoreManager hiscoreManager = new HiscoreManager();
+    
+
+
 
     /**
      * Sets gold controller.
@@ -26,6 +32,19 @@ public class MenuController {
     public void setGoldController(GoldController aThis) {
         goldController = aThis;
     }
+
+
+
+    public  void initialize() {
+        updateHiScore();
+    }
+
+    public void updateHiScore(){
+        hiscoreDisplay.setText("Hiscore: " + hiscoreManager.readHiScore());
+    }
+
+
+   
 
     /**
      * Handler for about the game
