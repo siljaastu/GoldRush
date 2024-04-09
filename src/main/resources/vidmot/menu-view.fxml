@@ -30,11 +30,6 @@
     </Menu>
     <Menu mnemonicParsing="false" text="Hjálp">
         <MenuItem mnemonicParsing="false" onAction="#onUmForritid" text="Um forritið" />
-      <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-        <content>
-          <CheckBox text="Click Me" />
-        </content>
-      </CustomMenuItem>
     </Menu>
-   <Menu fx:id="hiscoreDisplay" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: black;" text="Hiscore:" />
+<!--   <Menu fx:id="hiscoreDisplay" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-text-fill: black;" text="Hiscore:" />-->
 </MenuBar>
