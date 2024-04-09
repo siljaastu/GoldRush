@@ -2,6 +2,7 @@ package vinnsla;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
+import java.net.URL;
 import java.util.Objects;
 
 /**
@@ -54,9 +55,9 @@ public class Tonlist {
      * @param fileName Tekur inn nafnið á filenum sem er að spila
      */
     private void playOnceSound(String fileName) {
-        String path = Objects.requireNonNull(getClass().getResource(fileName)).getPath();
-        System.out.println(path);
-        Media media = new Media(new File(path).toURI().toString());
+        URL resourceUrl = Objects.requireNonNull(getClass().getResource(fileName));
+        System.out.println(resourceUrl.toExternalForm());
+        Media media = new Media(resourceUrl.toExternalForm());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
     }
@@ -66,9 +67,9 @@ public class Tonlist {
      * @param fileName Tekur inn nafnið á filenum sem er að spila
      */
     private void playHitSound(String fileName) {
-        String path = Objects.requireNonNull(getClass().getResource(fileName)).getPath();
-        System.out.println(path);
-        Media media = new Media(new File(path).toURI().toString());
+        URL resourceUrl = Objects.requireNonNull(getClass().getResource(fileName));
+        System.out.println(resourceUrl.toExternalForm());
+        Media media = new Media(resourceUrl.toExternalForm());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
         mediaPlayer.play();
