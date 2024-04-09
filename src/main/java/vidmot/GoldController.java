@@ -5,7 +5,6 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
@@ -16,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import vinnsla.Leikur;
+import vinnsla.Tonlist;
 import vinnsla.Spilari;
 
 import java.util.HashMap;
@@ -43,6 +43,7 @@ public class GoldController {
     private Timeline leiktimalina;  // Timeline for the gameloop
     private Timeline klukkutimalina; // Timeline for the clock
     private Stage stage;
+    private Tonlist tonlist = new Tonlist();
 
     /**
      * Initializes the controller.
@@ -74,6 +75,7 @@ public class GoldController {
                 fxKlukka.setStyle("-fx-text-fill: BLACK;");
             }
         });
+        // Initialize Tonlist
         hefjaLeik();
         raesaKlukku();
     }
@@ -111,10 +113,6 @@ public class GoldController {
         });
     }
 
-    public void onMainMenu() {
-
-    }
-
     /**
      * Raesa klukku starts the clock in accordance with level:erfidleikastig
      * When time is finished it shows the LeiklokDialog dialog
@@ -132,6 +130,8 @@ public class GoldController {
         klukkutimalina.setOnFinished(e -> {
             gulltimalina.stop();
             leiktimalina.stop();
+            tonlist.stop();
+            tonlist.gameOverMusic();
 
             LeiklokDialog dialog = new LeiklokDialog(leikur);
             dialog.setResultConverter(b -> {
@@ -166,6 +166,8 @@ public class GoldController {
                 return null;
             });
             dialog.show();
+
+
         });
         klukkutimalina.play();
     }
@@ -188,6 +190,8 @@ public class GoldController {
 
         gulltimalina = new Timeline(k, k2);            // Connect timeline
         gulltimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
+        gulltimalina.play();
+        tonlist.play();// start the timeline
         gulltimalina.play();                               // start the timeline
 
         if (leiktimalina != null) {
