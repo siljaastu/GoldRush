@@ -11,7 +11,7 @@ import java.io.IOException;
  *
  *****************************************************************************/
 public class Grafari extends Rectangle {
-    private Stefna stefna; // Instance of enum Stefna
+    private Stefna stefna = Stefna.KYRR; // Instance of enum Stefna
 
     /**
      * Constructor for Grafari. Loads the FXML and catches exception

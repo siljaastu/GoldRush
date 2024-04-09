@@ -12,9 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import vinnsla.Leikur;
 import vinnsla.Tonlist;
+import vinnsla.Spilari;
 
 import java.util.HashMap;
 
@@ -31,13 +33,15 @@ public class GoldController {
     @FXML
     private Label fxKlukka;     // Label for the clock
     @FXML
-    private Label fxStig;       // Label for the score
+    private Label fxStig1;       // Label for the score for Player 1
+    @FXML
+    private Label fxStig2;       // Label for the score for Player 2
     @FXML
     private MenuController menuStyringController; // MenuController item
-    private Leikur leikur = new Leikur(); // Leikur instance
+    public Leikur leikur = new Leikur(); // Leikur instance
     private Timeline gulltimalina;  // Timeline for the gold
+    private Timeline leiktimalina;  // Timeline for the gameloop
     private Timeline klukkutimalina; // Timeline for the clock
-    private HashMap<KeyCode, Stefna> attir = new HashMap<>(); // Makes a map for keycodes and directions
     private Stage stage;
     private Tonlist tonlist = new Tonlist();
 
@@ -47,16 +51,23 @@ public class GoldController {
      * completely processed.
      */
     public void initialize() {
+        System.out.println("GoldController initialize " + leikur.isTveirSpilarar());
+
         menuStyringController.setGoldController(this);
         orvatakkar();
         fxKlukka.textProperty().bind(Bindings.createStringBinding(() -> {
             return Integer.toString(leikur.getKlukka().getTimi());
         }, leikur.getKlukka().getTimiProperty()));
+
         fxLeikbord.setLeikur(leikur);
-            // binds the score in Leikur
-        fxStig.textProperty().bind(Bindings.createStringBinding(() -> {
-            return Integer.toString(leikur.getStig());
-        }, leikur.stigProperty()));
+        // binds the score in Leikur
+        fxStig1.textProperty().bind(Bindings.createStringBinding(() -> {
+            return Integer.toString(leikur.getSpilari1().getStig());
+        }, leikur.getSpilari1().stigProperty()));
+
+        fxStig2.textProperty().bind(Bindings.createStringBinding(() -> {
+            return Integer.toString(leikur.getSpilari2().getStig());
+        }, leikur.getSpilari2().stigProperty()));
         leikur.getKlukka().getTimiProperty().addListener((observable, old, newValue) -> {
             if (newValue.intValue() < 6) {
                 fxKlukka.setStyle("-fx-text-fill: RED;");
@@ -71,16 +82,33 @@ public class GoldController {
 
     /**
      * orvatakkar puts together enum directions and keycodes
+     * and sets up key event handler to update directions
      */
     private void orvatakkar() {
-        attir.put(KeyCode.UP, Stefna.UPP);
-        attir.put(KeyCode.DOWN, Stefna.NIDUR);
-        attir.put(KeyCode.RIGHT, Stefna.HAEGRI);
-        attir.put(KeyCode.LEFT, Stefna.VINSTRI);
-        fxLeikbord.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+        Spilari sp1 = leikur.getSpilari1();
+        Spilari sp2 = leikur.getSpilari2();
+
+        sp1.attir.put(KeyCode.UP, Stefna.UPP);
+        sp1.attir.put(KeyCode.DOWN, Stefna.NIDUR);
+        sp1.attir.put(KeyCode.RIGHT, Stefna.HAEGRI);
+        sp1.attir.put(KeyCode.LEFT, Stefna.VINSTRI);
+
+        sp2.attir.put(KeyCode.W, Stefna.UPP);
+        sp2.attir.put(KeyCode.S, Stefna.NIDUR);
+        sp2.attir.put(KeyCode.D, Stefna.HAEGRI);
+        sp2.attir.put(KeyCode.A, Stefna.VINSTRI);
+
+        fxLeikbord.addEventFilter(KeyEvent.ANY, event -> {
             if (leikur.getKlukka().getTimi() > 0) {
-                fxLeikbord.setStefna(attir.get(event.getCode()));
-                fxLeikbord.afram();
+                Stefna stefna1 = sp1.yttATakka(event);
+                if (stefna1 != null) {
+                    fxLeikbord.setStefna(stefna1);
+                }
+
+                Stefna stefna2 = sp2.yttATakka(event);
+                if (stefna2 != null) {
+                    fxLeikbord.setStefna2(stefna2);
+                }
             }
         });
     }
@@ -95,13 +123,13 @@ public class GoldController {
         }
         leikur.getKlukka().getTimiProperty().set(leikur.getTimar()[leikur.getErfidleikastig()]);
         KeyFrame k = new KeyFrame(Duration.seconds(1), e -> {
-            System.out.println(leikur.getErfidleikastig());
             leikur.getKlukka().tic();
         });
         klukkutimalina = new Timeline(k);
         klukkutimalina.setCycleCount(leikur.getKlukka().getTimi());
         klukkutimalina.setOnFinished(e -> {
             gulltimalina.stop();
+            leiktimalina.stop();
 
             LeiklokDialog dialog = new LeiklokDialog(leikur);
             dialog.setResultConverter(b -> {
@@ -148,17 +176,30 @@ public class GoldController {
      */
     public void hefjaLeik() {
         fxLeikbord.setjaBord();
-        leikur.setStig(0);
+        leikur.getSpilari1().setStig(0);
+        leikur.getSpilari2().setStig(0);
         if (gulltimalina != null) {
             gulltimalina.stop();
         }
         KeyFrame k = new KeyFrame(Duration.seconds(3), //Makes new gold every 3 sec
                 e -> fxLeikbord.meiraGull());
+        KeyFrame k2 = new KeyFrame(Duration.seconds(5), //Makes new coal every 5 sec
+                e -> fxLeikbord.meiraKol());
 
-        gulltimalina = new Timeline(k);                     // Connect timeline
+        gulltimalina = new Timeline(k, k2);            // Connect timeline
         gulltimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
         gulltimalina.play();
         tonlist.play();// start the timeline
+        gulltimalina.play();                               // start the timeline
+
+        if (leiktimalina != null) {
+            leiktimalina.stop();
+        }
+
+        leiktimalina = new Timeline(new KeyFrame(Duration.millis(50),
+                e -> fxLeikbord.afram()));            // Connect timeline
+        leiktimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
+        leiktimalina.play();                               // start the timeline
     }
 
     /**
