@@ -22,7 +22,9 @@ public class Tonlist {
      * Stoppar að spila bakground tónlistina
      */
     public void stop() {
-        mediaPlayer.stop();
+        if (this.mediaPlayer != null) {
+            mediaPlayer.stop();
+        }
     }
 
     /**

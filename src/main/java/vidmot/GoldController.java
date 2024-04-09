@@ -174,6 +174,7 @@ public class GoldController {
      * Generates gold
      */
     public void hefjaLeik() {
+        tonlist.stop();
         fxLeikbord.setjaBord();
         leikur.getSpilari1().setStig(0);
         leikur.getSpilari2().setStig(0);
