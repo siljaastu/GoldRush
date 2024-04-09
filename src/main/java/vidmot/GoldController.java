@@ -5,7 +5,6 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar;
@@ -15,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import vinnsla.Leikur;
+import vinnsla.Tonlist;
 
 import java.util.HashMap;
 
@@ -39,6 +39,7 @@ public class GoldController {
     private Timeline klukkutimalina; // Timeline for the clock
     private HashMap<KeyCode, Stefna> attir = new HashMap<>(); // Makes a map for keycodes and directions
     private Stage stage;
+    private Tonlist tonlist = new Tonlist();
 
     /**
      * Initializes the controller.
@@ -63,6 +64,7 @@ public class GoldController {
                 fxKlukka.setStyle("-fx-text-fill: BLACK;");
             }
         });
+        // Initialize Tonlist
         hefjaLeik();
         raesaKlukku();
     }
@@ -81,10 +83,6 @@ public class GoldController {
                 fxLeikbord.afram();
             }
         });
-    }
-
-    public void onMainMenu() {
-
     }
 
     /**
@@ -138,6 +136,8 @@ public class GoldController {
                 return null;
             });
             dialog.show();
+            tonlist.stop();
+
         });
         klukkutimalina.play();
     }
@@ -157,7 +157,8 @@ public class GoldController {
 
         gulltimalina = new Timeline(k);                     // Connect timeline
         gulltimalina.setCycleCount(Timeline.INDEFINITE);   // how long the timeline runs
-        gulltimalina.play();                               // start the timeline
+        gulltimalina.play();
+        tonlist.play();// start the timeline
     }
 
     /**
