@@ -9,61 +9,69 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFEB3B;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" style="-fx-background-color: #FFEB3B;" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.MainMenuController">
     <children>
 
-              <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0">
+        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0">
             <children>
-<!--               <fx:include fx:id="menuStyring" source="menu-view.fxml" />-->
-              <VBox alignment="CENTER" prefWidth="800.0" VBox.vgrow="ALWAYS">
-               <children>
-                      <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 50px; -fx-font-weight: bold; -fx-fill: #000000;" text="GoldRush" textAlignment="CENTER">
-                          <font>
-                              <Font size="50.0" />
-                          </font>
-                          <VBox.margin>
-                              <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
-                          </VBox.margin>
-                      </Text>
-                      <HBox alignment="CENTER" prefWidth="800.0">
-                          <children>
-                              <VBox alignment="CENTER">
-                                  <children>
-                                      <Button mnemonicParsing="false" onAction="#handleOnePlayer" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-font-size: 18px;" text="1 Player" textAlignment="CENTER">
-                                          <cursor>
-                                              <Cursor fx:constant="HAND" />
-                                          </cursor>
-                                      </Button>
-                                  </children>
-                                  <HBox.margin>
-                                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                  </HBox.margin>
-                              </VBox>
-                              <VBox alignment="CENTER">
-                                  <children>
-                                      <Button mnemonicParsing="false" onAction="#handleTwoPlayer" pickOnBounds="false" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-font-size: 18px;" text="2 Player" textAlignment="CENTER">
-                                          <cursor>
-                                              <Cursor fx:constant="HAND" />
-                                          </cursor>
-                                      </Button>
-                                  </children>
-                                  <HBox.margin>
-                                      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                  </HBox.margin>
-                              </VBox>
-                          </children>
-                          <opaqueInsets>
-                              <Insets />
-                          </opaqueInsets>
-                          <VBox.margin>
-                              <Insets />
-                          </VBox.margin>
-                     <padding>
-                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                     </padding>
-                      </HBox>
-               </children>
-              </VBox>
+                <!--               <fx:include fx:id="menuStyring" source="menu-view.fxml" />-->
+                <VBox alignment="CENTER" prefWidth="800.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0"
+                              style="-fx-font-size: 50px; -fx-font-weight: bold; -fx-fill: #000000;" text="GoldRush"
+                              textAlignment="CENTER">
+                            <font>
+                                <Font size="50.0"/>
+                            </font>
+                            <VBox.margin>
+                                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+                            </VBox.margin>
+                        </Text>
+                        <HBox alignment="CENTER" prefWidth="800.0">
+                            <children>
+                                <VBox alignment="CENTER">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#handleOnePlayer"
+                                                style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-font-size: 18px;"
+                                                text="1 Player" textAlignment="CENTER">
+                                            <cursor>
+                                                <Cursor fx:constant="HAND"/>
+                                            </cursor>
+                                        </Button>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                    </HBox.margin>
+                                </VBox>
+                                <VBox alignment="CENTER">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#handleTwoPlayer" pickOnBounds="false"
+                                                style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-color: black; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-font-size: 18px;"
+                                                text="2 Player" textAlignment="CENTER">
+                                            <cursor>
+                                                <Cursor fx:constant="HAND"/>
+                                            </cursor>
+                                        </Button>
+                                    </children>
+                                    <HBox.margin>
+                                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                                    </HBox.margin>
+                                </VBox>
+                            </children>
+                            <opaqueInsets>
+                                <Insets/>
+                            </opaqueInsets>
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                            <padding>
+                                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+                            </padding>
+                        </HBox>
+                    </children>
+                </VBox>
             </children>
         </VBox>
     </children>

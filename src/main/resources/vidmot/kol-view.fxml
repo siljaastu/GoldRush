@@ -5,18 +5,20 @@
 <?import javafx.scene.paint.Stop?>
 <?import vidmot.Kol?>
 
-<fx:root height="25.0" type="vidmot.Kol" width="45.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root height="25.0" type="vidmot.Kol" width="45.0" xmlns="http://javafx.com/javafx/21"
+         xmlns:fx="http://javafx.com/fxml/1">
     <fill>
-        <RadialGradient centerX="0.3836565096952909" centerY="0.40973871733966744" cycleMethod="REFLECT" focusDistance="-0.06936416184971106" radius="0.9161849710982659">
+        <RadialGradient centerX="0.3836565096952909" centerY="0.40973871733966744" cycleMethod="REFLECT"
+                        focusDistance="-0.06936416184971106" radius="0.9161849710982659">
             <stops>
                 <Stop>
                     <color>
-                        <Color red="0.5131579041481018" green="0.5131579041481018" blue="0.5131579041481018" />
+                        <Color red="0.5131579041481018" green="0.5131579041481018" blue="0.5131579041481018"/>
                     </color>
                 </Stop>
                 <Stop offset="1.0">
                     <color>
-                        <Color red="0.2631579041481018" green="0.2631579041481018" blue="0.2631579041481018" />
+                        <Color red="0.2631579041481018" green="0.2631579041481018" blue="0.2631579041481018"/>
                     </color>
                 </Stop>
             </stops>

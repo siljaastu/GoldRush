@@ -5,33 +5,35 @@
 <?import javafx.scene.paint.Stop?>
 <?import vidmot.Gull?>
 
-<fx:root height="25.0" type="vidmot.Gull" width="45.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root height="25.0" type="vidmot.Gull" width="45.0" xmlns="http://javafx.com/javafx/21"
+         xmlns:fx="http://javafx.com/fxml/1">
     <fill>
-        <RadialGradient centerX="0.3836565096952909" centerY="0.40973871733966744" cycleMethod="REFLECT" focusDistance="-0.06936416184971106" radius="0.9161849710982659">
+        <RadialGradient centerX="0.3836565096952909" centerY="0.40973871733966744" cycleMethod="REFLECT"
+                        focusDistance="-0.06936416184971106" radius="0.9161849710982659">
             <stops>
                 <Stop>
                     <color>
-                        <Color red="1.0" green="0.9498456716537476" blue="0.39814814925193787" />
+                        <Color red="1.0" green="0.9498456716537476" blue="0.39814814925193787"/>
                     </color>
                 </Stop>
                 <Stop offset="0.23825503355704697">
                     <color>
-                        <Color red="1.0" green="0.9498456716537476" blue="0.39814814925193787" />
+                        <Color red="1.0" green="0.9498456716537476" blue="0.39814814925193787"/>
                     </color>
                 </Stop>
                 <Stop offset="0.2785234899328859">
                     <color>
-                        <Color red="1.0" green="0.9498456716537476" blue="0.39814814925193787" />
+                        <Color red="1.0" green="0.9498456716537476" blue="0.39814814925193787"/>
                     </color>
                 </Stop>
                 <Stop offset="0.721476510067114">
                     <color>
-                        <Color red="1.0" green="0.6833333373069763" />
+                        <Color red="1.0" green="0.6833333373069763"/>
                     </color>
                 </Stop>
                 <Stop offset="1.0">
                     <color>
-                        <Color red="0.9800000190734863" green="0.6997470259666443" blue="0.08820000290870667" />
+                        <Color red="0.9800000190734863" green="0.6997470259666443" blue="0.08820000290870667"/>
                     </color>
                 </Stop>
             </stops>
