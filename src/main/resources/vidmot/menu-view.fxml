@@ -30,6 +30,16 @@
         <RadioMenuItem fx:id="erfitt" mnemonicParsing="false" onAction="#onErfidleikastig" text="Erfitt (30 sek)"
                        toggleGroup="$erfidleikastig"/>
     </Menu>
+    <Menu mnemonicParsing="false" text="Fjöldi spilara" fx:id="fxFjoldiSpilara">
+        <RadioMenuItem fx:id="oneplayer" mnemonicParsing="false" onAction="#onFjoldiSpilara" selected="true"
+                       text="1 spilari">
+            <toggleGroup>
+                <ToggleGroup fx:id="spilarar"/>
+            </toggleGroup>
+        </RadioMenuItem>
+        <RadioMenuItem fx:id="twoplayer" mnemonicParsing="false" onAction="#onFjoldiSpilara" text="2 spilarar"
+                       toggleGroup="$spilarar"/>
+    </Menu>
     <Menu mnemonicParsing="false" text="Hjálp">
         <MenuItem mnemonicParsing="false" onAction="#onUmForritid" text="Um forritið"/>
     </Menu>

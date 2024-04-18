@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import vinnsla.Leikur;
 
 import java.util.Optional;
 
@@ -21,6 +22,13 @@ public class MenuController {
     private MenuItem hiscoreDisplay;
     private HiscoreManager hiscoreManager = new HiscoreManager();
 
+    @FXML
+    private Menu fxFjoldiSpilara;
+
+    public void initialize() {
+        RadioMenuItem twoPlayer = (RadioMenuItem) fxFjoldiSpilara.getItems().getLast();
+        twoPlayer.setSelected(Leikur.tveirSpilarar);
+    }
 
     /**
      * Sets gold controller.
@@ -88,6 +96,15 @@ public class MenuController {
             default -> 0;
         };
         goldController.setErfidleikastig(thyngd);
+        onNyrLeikur(); // Starts a new game with the selected level
+    }
+
+    @FXML
+    private void onFjoldiSpilara(ActionEvent event) {
+        RadioMenuItem selectedItem = (RadioMenuItem) event.getSource();
+
+        Leikur.tveirSpilarar = selectedItem.getId().equals("twoplayer");
+
         onNyrLeikur(); // Starts a new game with the selected level
     }
 
