@@ -9,7 +9,6 @@ public class HiscoreManager {
         this.path = "src/main/hiscores.txt";
     }
 
-    
     public int readHiScore() {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line = reader.readLine();
@@ -22,17 +21,16 @@ public class HiscoreManager {
         return 0;
     }
 
-    
     public int updateHiScore(int newScore) {
         int currentHighScore = readHiScore();
         if (newScore > currentHighScore) {
             try (PrintWriter writer = new PrintWriter(new FileWriter(path))) {
-                writer.println(newScore); 
-                return newScore; 
+                writer.println(newScore);
+                return newScore;
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return currentHighScore; 
+        return currentHighScore;
     }
 }

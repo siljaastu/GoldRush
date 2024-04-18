@@ -35,13 +35,13 @@ public class GoldController {
     private Label fxStig2;       // Label for the score for Player 2
     @FXML
     private MenuController menuStyringController; // MenuController item
-    public Leikur leikur = new Leikur(); // Leikur instance
+    private final Leikur leikur = new Leikur(); // Leikur instance
     private Timeline gulltimalina;  // Timeline for the gold
     private Timeline kolatimalina;  // Timeline for the coal
     private Timeline leiktimalina;  // Timeline for the gameloop
     private Timeline klukkutimalina; // Timeline for the clock
     private Stage stage;
-    private Tonlist tonlist = new Tonlist();
+    private final Tonlist tonlist = new Tonlist();
 
     /**
      * Binds the score for players to the label

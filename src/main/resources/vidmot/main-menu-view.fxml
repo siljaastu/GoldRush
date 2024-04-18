@@ -14,7 +14,7 @@
 
               <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0">
             <children>
-               <fx:include fx:id="menuStyring" source="menu-view.fxml" />
+<!--               <fx:include fx:id="menuStyring" source="menu-view.fxml" />-->
               <VBox alignment="CENTER" prefWidth="800.0" VBox.vgrow="ALWAYS">
                <children>
                       <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 50px; -fx-font-weight: bold; -fx-fill: #000000;" text="GoldRush" textAlignment="CENTER">

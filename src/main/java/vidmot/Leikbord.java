@@ -2,11 +2,8 @@ package vidmot;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Translate;
@@ -28,10 +25,10 @@ public class Leikbord extends Pane {
     private Grafari grafari1;
     private Grafari grafari2;
     private Leikur leikur;
-    private ObservableList<Gull> gull = FXCollections.observableArrayList(); // Listi sem heldur utan um gullin
-    private ObservableList<Kol> kol = FXCollections.observableArrayList(); // Listi sem heldur utan um kolin
+    private final ObservableList<Gull> gull = FXCollections.observableArrayList(); // Listi sem heldur utan um gullin
+    private final ObservableList<Kol> kol = FXCollections.observableArrayList(); // Listi sem heldur utan um kolin
     private final Random random = new Random();   // Random generator
-    private Tonlist tonlist = new Tonlist();
+    private final Tonlist tonlist = new Tonlist();
 
     /**
      * Constructor for Leikbord. Loads the FXML and catches exception

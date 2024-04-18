@@ -17,8 +17,9 @@ public class GoldApplication extends Application {
     /**
      * The start method is called after the init method has returned,
      * and after the system is ready for the application to begin running.
+     *
      * @param stage the primary stage for this application, onto which
-     * the application scene can be set.
+     *              the application scene can be set.
      * @throws IOException if an error occurs while loading the FXML file.
      */
     @Override

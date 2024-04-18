@@ -17,14 +17,14 @@
         <SeparatorMenuItem mnemonicParsing="false" />
         <MenuItem mnemonicParsing="false" onAction="#onHaetta" text="Hætta" />
     </Menu>
-    <Menu mnemonicParsing="false" text="Breyta">
-        <RadioMenuItem fx:id="lett" mnemonicParsing="false" onAction="#onErfidleikastig" selected="true" text="Létt">
+    <Menu mnemonicParsing="false" text="Breyta tíma">
+        <RadioMenuItem fx:id="lett" mnemonicParsing="false" onAction="#onErfidleikastig" selected="true" text="Létt (60 sek)">
             <toggleGroup>
                 <ToggleGroup fx:id="erfidleikastig" />
             </toggleGroup>
         </RadioMenuItem>
-        <RadioMenuItem fx:id="midlungs" mnemonicParsing="false" onAction="#onErfidleikastig" text="Miðlungs" toggleGroup="$erfidleikastig" />
-        <RadioMenuItem fx:id="erfitt" mnemonicParsing="false" onAction="#onErfidleikastig" text="Erfitt" toggleGroup="$erfidleikastig" />
+        <RadioMenuItem fx:id="midlungs" mnemonicParsing="false" onAction="#onErfidleikastig" text="Miðlungs (45 sek)" toggleGroup="$erfidleikastig" />
+        <RadioMenuItem fx:id="erfitt" mnemonicParsing="false" onAction="#onErfidleikastig" text="Erfitt (30 sek)" toggleGroup="$erfidleikastig" />
     </Menu>
     <Menu mnemonicParsing="false" text="Hjálp">
         <MenuItem mnemonicParsing="false" onAction="#onUmForritid" text="Um forritið" />
