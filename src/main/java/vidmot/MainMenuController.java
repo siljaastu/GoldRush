@@ -11,13 +11,9 @@ import vinnsla.Leikur;
 
 
 public class MainMenuController {
-    
 
     public void initialize() {
-        
     }
-
-
 
     // Takkinn ef valið er einn leikmann
     @FXML

@@ -20,15 +20,12 @@ import java.io.IOException;
 
 public class LeiklokDialog extends Dialog<Void> {
     private Leikur leikur; // new instance of Leikur
-
     @FXML
     private Label fxLokastig; // Label for final score
     private HiscoreManager hiscoreManager = new HiscoreManager();
 
-
     public LeiklokDialog(Leikur leikur) {
         this.leikur = leikur;
-
         setTitle("Leik lokið!");
         hiscoreManager.updateHiScore(leikur.getSpilari1().getStig());
         hiscoreManager.updateHiScore(leikur.getSpilari2().getStig());

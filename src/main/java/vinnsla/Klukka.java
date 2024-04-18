@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  *
  */
 public class Klukka {
-    private SimpleIntegerProperty timi; // Simple Integer property for time
+    private final SimpleIntegerProperty timi; // Simple Integer property for time
 
     /**
      * Instantiates a new Klukka.

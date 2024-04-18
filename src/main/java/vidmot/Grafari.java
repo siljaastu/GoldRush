@@ -1,6 +1,8 @@
 package vidmot;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.shape.Rectangle;
+
 import java.io.IOException;
 
 /******************************************************************************

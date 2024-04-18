@@ -7,34 +7,27 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<DialogPane fx:id="dialogPane" prefHeight="250.0" prefWidth="300.0" style="-fx-background-color: CORAL;" stylesheets="@gogn/utlit.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane fx:id="dialogPane" prefHeight="250.0" prefWidth="300.0" style="-fx-background-color: CORAL;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <content>
         <VBox alignment="CENTER" spacing="15.0">
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Leik">
-            <font>
-               <Font name="Hoefler Text Black Italic" size="25.0" />
-            </font>
-            <VBox.margin>
-               <Insets right="40.0" />
-            </VBox.margin>
-         </Text>
-         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Lokið!" textAlignment="CENTER">
-            <font>
-               <Font name="Hoefler Text Black Italic" size="25.0" />
-            </font>
-            <VBox.margin>
-               <Insets left="60.0" />
-            </VBox.margin>
-         </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Leik lokið!">
+                <font>
+                    <Font name="Hoefler Text Black Italic" size="25.0"/>
+                </font>
+                <VBox.margin>
+                    <Insets/>
+                </VBox.margin>
+            </Text>
             <Label fx:id="fxLokastig" alignment="TOP_CENTER" text="stig" textAlignment="CENTER">
                 <font>
-                    <Font name="System Bold" size="15.0" />
+                    <Font name="System Bold" size="15.0"/>
                 </font>
             </Label>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Viltu spila aftur?" textAlignment="CENTER" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Viltu spila aftur?" textAlignment="CENTER"/>
         </VBox>
     </content>
     <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
     </padding>
 </DialogPane>

@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import vinnsla.Leikur;
+
 import java.util.Optional;
 
 /******************************************************************************
@@ -18,9 +20,15 @@ public class MenuController {
     private GoldController goldController; // GoldController item
     @FXML
     private MenuItem hiscoreDisplay;
-
     private HiscoreManager hiscoreManager = new HiscoreManager();
-    
+
+    @FXML
+    private Menu fxFjoldiSpilara;
+
+    public void initialize() {
+        RadioMenuItem twoPlayer = (RadioMenuItem) fxFjoldiSpilara.getItems().getLast();
+        twoPlayer.setSelected(Leikur.tveirSpilarar);
+    }
 
     /**
      * Sets gold controller.
@@ -31,33 +39,27 @@ public class MenuController {
         goldController = aThis;
     }
 
-
-
 //    public  void initialize() {
 //        updateHiScore();
 //    }
 
-    public void updateHiScore(){
+    public void updateHiScore() {
         hiscoreDisplay.setText("Hiscore: " + hiscoreManager.readHiScore());
     }
 
-
-   
-
     /**
      * Handler for about the game
-     * @param event
      */
     @FXML
-    private void onUmForritid(ActionEvent event) {
+    private void onUmForritid() {
         Alert forritid = new Alert(Alert.AlertType.INFORMATION);
         forritid.setTitle("Um GoldRush");
         forritid.setHeaderText("GoldRush leikurinn");
         forritid.setContentText("Markmið er að safna eins miklu " +
                 "gulli og þú getur áður en að tíminn rennur út. \n" +
-                "Passaður þig þó að snerta ekki litlu kolamolana!. \n" +
+                "Passaður þig þó að snerta ekki litlu kolamolana! \n" +
                 "Notaðu örvatakkana til að færa gull grafarann. \n" +
-                "2.Player: Notaðu A, W, S, D til að færa gull grafarann");
+                "2 Player: Notaðu A, W, S, D til að færa gull grafarann.");
         forritid.showAndWait();
     }
 
@@ -81,6 +83,7 @@ public class MenuController {
 
     /**
      * Handler for on difficulty level
+     *
      * @param event
      */
     @FXML
@@ -93,6 +96,15 @@ public class MenuController {
             default -> 0;
         };
         goldController.setErfidleikastig(thyngd);
+        onNyrLeikur(); // Starts a new game with the selected level
+    }
+
+    @FXML
+    private void onFjoldiSpilara(ActionEvent event) {
+        RadioMenuItem selectedItem = (RadioMenuItem) event.getSource();
+
+        Leikur.tveirSpilarar = selectedItem.getId().equals("twoplayer");
+
         onNyrLeikur(); // Starts a new game with the selected level
     }
 
