@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Translate;
@@ -63,7 +66,7 @@ public class Leikbord extends Pane {
             grafari1.relocate(30, 400);
 
             grafari2 = new Grafari();
-            grafari2.relocate(770-grafari2.getWidth(), 400);
+            grafari2.relocate(770 - grafari2.getWidth(), 400);
             grafari2.setFill(Color.LIMEGREEN);
 
             this.getChildren().addAll(grafari1, grafari2);
@@ -94,6 +97,7 @@ public class Leikbord extends Pane {
 
     /**
      * Update direction for Grafari 1
+     *
      * @param stefna
      */
     public void setStefna(Stefna stefna) {
@@ -102,6 +106,7 @@ public class Leikbord extends Pane {
 
     /**
      * Update direction for Grafari 2
+     *
      * @param stefna
      */
     public void setStefna2(Stefna stefna) {
@@ -159,18 +164,71 @@ public class Leikbord extends Pane {
 
     /**
      * Produces more gold g randomly on leikbord
+     * Avoids obstacles such as gold, coal and golddiggers
      */
     private void framleidaGull() {
         Gull g = new Gull();
-        g.relocate(random.nextInt((int) (getWidth() - g.getWidth())), random.nextInt((int) (getHeight() - g.getHeight())));
+        int x = random.nextInt((int) (getWidth() - g.getWidth()));
+        int y = random.nextInt((int) (getHeight() - g.getHeight()));
+        BoundingBox bounds = new BoundingBox(x, y, g.getWidth(), g.getHeight());
 
+        while (kolObstacle(bounds) || gullObstacle(bounds) || grafariObstacle(bounds)) {
+            x = random.nextInt((int) (getWidth() - g.getWidth()));
+            y = random.nextInt((int) (getHeight() - g.getHeight()));
+            bounds = new BoundingBox(x, y, g.getWidth(), g.getHeight());
+        }
+        g.relocate(x, y);
         // Add gold to children
         this.getChildren().add(g);
-
         // Add gold to ObservableList
         gull.add(g);
     }
-    
+
+    /**
+     * Checks if there is a coal within the given Bounding box
+     *
+     * @param bounds Bounding box of an object to check
+     * @return Boolean, true if intersects
+     */
+    private boolean kolObstacle(BoundingBox bounds) {
+        for (Kol moli : kol) {
+            if (bounds.intersects(moli.getBoundsInParent())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there is a gold within the given Bounding box
+     *
+     * @param bounds Bounding box of an object to check
+     * @return Boolean, true if intersects
+     */
+    private boolean gullObstacle(BoundingBox bounds) {
+        for (Gull moli : gull) {
+            if (bounds.intersects(moli.getBoundsInParent())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if there is a golddigger within the given Bounding box
+     *
+     * @param bounds Bounding box of an object to check
+     * @return Boolean, true if intersects
+     */
+    private boolean grafariObstacle(BoundingBox bounds) {
+        if (bounds.intersects(grafari1.getBoundsInParent())) {
+            return true;
+        } else if (grafari2 != null && bounds.intersects(grafari2.getBoundsInParent())) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * meiraGull calls on framleidaGull
      */
@@ -181,6 +239,7 @@ public class Leikbord extends Pane {
     /**
      * Checks if golddigger intersects with gold
      * Removes gold if intersects
+     *
      * @return true if intersected with gold, otherwise false
      */
     private boolean erGrefurGull(Grafari gr) {
@@ -199,6 +258,7 @@ public class Leikbord extends Pane {
     /**
      * Checks if golddigger intersects with coal
      * Removes coal if intersects
+     *
      * @return true if intersected with coal, otherwise false
      */
     private boolean erGrefurKol(Grafari gr) {
@@ -216,14 +276,23 @@ public class Leikbord extends Pane {
 
     /**
      * Produces more kol k randomly on leikbord
+     * Avoids obstacles such as gold, coal and golddiggers
      */
     private void framleidaKol() {
         Kol k = new Kol();
-        k.relocate(random.nextInt((int) (getWidth() - k.getWidth())), random.nextInt((int) (getHeight() - k.getHeight())));
 
+        int x = random.nextInt((int) (getWidth() - k.getWidth()));
+        int y = random.nextInt((int) (getHeight() - k.getHeight()));
+        BoundingBox bounds = new BoundingBox(x, y, k.getWidth(), k.getHeight());
+
+        while (kolObstacle(bounds) || gullObstacle(bounds) || grafariObstacle(bounds)) {
+            x = random.nextInt((int) (getWidth() - k.getWidth()));
+            y = random.nextInt((int) (getHeight() - k.getHeight()));
+            bounds = new BoundingBox(x, y, k.getWidth(), k.getHeight());
+        }
+        k.relocate(x, y);
         // Add kol to children
         this.getChildren().add(k);
-
         // Add kol to ObservableList
         kol.add(k);
     }
@@ -237,9 +306,10 @@ public class Leikbord extends Pane {
 
     /**
      * innanBord used to make sure we are moving within our gameboard, leikbord
+     *
      * @param value value we are looking at
-     * @param min min number
-     * @param max number
+     * @param min   min number
+     * @param max   number
      * @return value that is between min and max
      */
     private static double innanBords(double value, double min, double max) {
