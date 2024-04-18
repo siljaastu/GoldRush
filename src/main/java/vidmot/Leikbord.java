@@ -4,8 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.BoundingBox;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Translate;
 import vinnsla.Leikur;
 import vinnsla.Spilari;
@@ -161,20 +163,14 @@ public class Leikbord extends Pane {
 
     /**
      * Produces more gold g randomly on leikbord
-     * Avoids obstacles such as gold, coal and golddiggers
      */
     private void framleidaGull() {
         Gull g = new Gull();
-        int x = random.nextInt((int) (getWidth() - g.getWidth()));
-        int y = random.nextInt((int) (getHeight() - g.getHeight()));
-        BoundingBox bounds = new BoundingBox(x, y, g.getWidth(), g.getHeight());
 
-        while (kolObstacle(bounds) || gullObstacle(bounds) || grafariObstacle(bounds)) {
-            x = random.nextInt((int) (getWidth() - g.getWidth()));
-            y = random.nextInt((int) (getHeight() - g.getHeight()));
-            bounds = new BoundingBox(x, y, g.getWidth(), g.getHeight());
-        }
-        g.relocate(x, y);
+        // Try to find a random placement for the gold
+        Point2D p = randomPlacement(g);
+        g.relocate(p.getX(), p.getY());
+
         // Add gold to children
         this.getChildren().add(g);
         // Add gold to ObservableList
@@ -272,22 +268,43 @@ public class Leikbord extends Pane {
     }
 
     /**
+     * Tries to find a random placement that does not collide with
+     * existing coal, gold, or golddiggers on the leikbord
+     *
+     * @param r Object to place
+     * @return 2D point with placement coordinates
+     */
+    private Point2D randomPlacement(Rectangle r) {
+        int x = random.nextInt((int) (getWidth() - r.getWidth()));
+        int y = random.nextInt((int) (getHeight() - r.getHeight()));
+        BoundingBox bounds = new BoundingBox(x, y, r.getWidth(), r.getHeight());
+
+        int numTries = 0;
+
+        while (kolObstacle(bounds) || gullObstacle(bounds) || grafariObstacle(bounds)) {
+            x = random.nextInt((int) (getWidth() - r.getWidth()));
+            y = random.nextInt((int) (getHeight() - r.getHeight()));
+            bounds = new BoundingBox(x, y, r.getWidth(), r.getHeight());
+
+            if (++numTries >= 100) {
+                System.err.print("Timed out placing " + r);
+                return null;
+            }
+        }
+
+        return new Point2D(x, y);
+    }
+
+    /**
      * Produces more kol k randomly on leikbord
-     * Avoids obstacles such as gold, coal and golddiggers
      */
     private void framleidaKol() {
         Kol k = new Kol();
 
-        int x = random.nextInt((int) (getWidth() - k.getWidth()));
-        int y = random.nextInt((int) (getHeight() - k.getHeight()));
-        BoundingBox bounds = new BoundingBox(x, y, k.getWidth(), k.getHeight());
+        // Try to find a random placement for the gold
+        Point2D p = randomPlacement(k);
+        k.relocate(p.getX(), p.getY());
 
-        while (kolObstacle(bounds) || gullObstacle(bounds) || grafariObstacle(bounds)) {
-            x = random.nextInt((int) (getWidth() - k.getWidth()));
-            y = random.nextInt((int) (getHeight() - k.getHeight()));
-            bounds = new BoundingBox(x, y, k.getWidth(), k.getHeight());
-        }
-        k.relocate(x, y);
         // Add kol to children
         this.getChildren().add(k);
         // Add kol to ObservableList

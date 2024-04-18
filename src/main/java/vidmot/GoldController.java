@@ -71,7 +71,6 @@ public class GoldController {
      * completely processed.
      */
     public void initialize() {
-
         menuStyringController.setGoldController(this);
         orvatakkar();
         fxKlukka.textProperty().bind(Bindings.createStringBinding(() -> {
@@ -82,10 +81,6 @@ public class GoldController {
 
         bindaStig(leikur.getSpilari1(), fxStig1);
         bindaStig(leikur.getSpilari2(), fxStig2);
-
-        if (!Leikur.tveirSpilarar) {
-            fxStig2.getParent().setVisible(false);
-        } // Hides scorebox for 2 player if 1 player
 
         leikur.getKlukka().getTimiProperty().addListener((observable, old, newValue) -> {
             if (newValue.intValue() < 6) {
@@ -194,6 +189,9 @@ public class GoldController {
      * Generates gold
      */
     public void hefjaLeik() {
+        // Hides scorebox for 2 player if 1 player
+        fxStig2.getParent().setVisible(Leikur.tveirSpilarar);
+
         tonlist.stop();
         fxLeikbord.setjaBord();
 
